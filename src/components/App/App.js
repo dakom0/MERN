@@ -1,32 +1,65 @@
 import React, { Component } from "react";
+import { Route, Link } from "react-router-dom";
 import Home from "../Home/Home";
+import Get from '../Get/Get'
+import Put from '../Put/Put'
+import Del from '../Delete/Del'
+import Upd from '../Update/Upd'
+
 import "./App.css";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      price: null
-    };
-    this.setPrice = this.setPrice.bind(this);
-  }
-
-  setPrice(price) {
-    this.setState({ price: price });
-  }
 
   render() {
     return (
-      <div>
+      <div className="AppComponent">
         <nav>
-          <img
-            src="https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png"
-            alt=""
-          />
-          <h1>Bitcoin prices</h1>
+          <Link to="/">
+            <img
+              src="http://pngimg.com/uploads/pokeball/pokeball_PNG24.png"
+              alt=""
+            />
+            <h1>Pokemon CRUD API</h1>
+          </Link>
+          <Link to="/get">
+            GET
+          </Link>
+          <Link to="/post">
+            POST
+          </Link>
+          <Link to="/update">
+            UPDATE
+          </Link>
+          <Link to="/delete">
+            DELETE
+          </Link>
         </nav>
         <main>
-          <Home />
+          <Route
+            path="/"
+            exact
+            component={Home}
+          />
+          <Route
+            path="/get"
+            exact
+            component={Get}
+          />
+            <Route
+            path="/post"
+            exact
+            component={Put}
+          />
+          <Route
+            path="/delete"
+            exact
+            component={Del}
+          />
+          <Route
+            path="/update"
+            exact
+            component={Upd}
+          />
         </main>
       </div>
     );
