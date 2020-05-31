@@ -7,10 +7,13 @@ class Put extends Component {
         super(props)
 
         this.state = {
-            name: ""
+            name: "",
+            pic: ""
         }
     }
-
+    changeHandles = e =>{
+        this.setState({pic: e.target.value})
+    }
 
     changeHandler = e =>{
         this.setState({name: e.target.value})
@@ -23,6 +26,7 @@ class Put extends Component {
             headers: {'Access-Control-Allow-Origin': 'dakom1-crud-api.herokuapp.com/lists'},
             data: {
               name: this.state.name,
+              pic: this.state.pic
             }
     };
 
@@ -54,6 +58,7 @@ class Put extends Component {
 
                 <form onSubmit={this.submitHandler}>
                     <div>Name<input type="text" name= "name" onChange={this.changeHandler}/></div>
+                    <div>Pic<input type="text" name= "pic" onChange={this.changeHandles}/></div>
 
                     <button type="submit">Post</button>
                 </form>

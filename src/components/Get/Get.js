@@ -7,7 +7,7 @@ class Get extends Component {
     super(props)
   
     this.state = {
-       gets: []
+       get: []
     }
   }
   
@@ -15,7 +15,7 @@ componentDidMount(){
   axios.get(`https://cors-anywhere.herokuapp.com/dakom1-crud-api.herokuapp.com/lists`,{headers: {'Access-Control-Allow-Origin': 'dakom1-crud-api.herokuapp.com/lists'}})
   .then(res => {
     console.log(res)
-    this.setState({gets: res.data})
+    this.setState({get: res.data})
 
   })
   .catch(error =>{
@@ -24,13 +24,28 @@ componentDidMount(){
 }
 
   render() {
-      const {gets} = this.state
+      const {get} = this.state
+      function compare_qty(a, b){
+        // a should come before b in the sorted order
+        if(a._id < b._id){
+                return -1;
+        // a should come after b in the sorted order
+        }else if(a._id > b._id){
+                return 1;
+        // a and b are the same
+        }else{
+                return 0;
+        }
+}
+      let gets = get.sort(compare_qty)
+      console.log(gets);
       return(
         <div>
           List of Pokemon
-          <p>Pokemon<span></span>ID</p>
+          <p>Pokemon<span></span><span></span>ID</p>
           {
-            gets.length ? gets.map(gets => <div key={gets._id}>{gets.name}<span></span>{gets._id}</div>): null
+            gets.length ? gets.map(gets => <div className="pkmn" key={gets._id}><div><img src={gets.pic} alt={""}></img></div>{gets.name}<span></span>{gets._id}</div>
+            ): null
           }
         </div>
       );

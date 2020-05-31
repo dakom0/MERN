@@ -8,7 +8,8 @@ class Upd extends Component {
 
         this.state = {
             name: "",
-            id: ""
+            id: "",
+            pic: ""
         }
     }
 
@@ -20,34 +21,67 @@ class Upd extends Component {
         this.setState({id: e.target.value})
     }
 
-    submitHandler = e =>{
+    changeHandle = e =>{
+        this.setState({pic: e.target.value})
+    }
+  
+    submitHandler = e => {
         e.preventDefault()
-        const user ={
+
+        if (this.state.pic==="") {
+
+        var user = {
             method: "put",
             url: `https://cors-anywhere.herokuapp.com/dakom1-crud-api.herokuapp.com/lists/${this.state.id}`,
-            headers: {'Access-Control-Allow-Origin': 'dakom1-crud-api.herokuapp.com/lists'},
+            headers: { 'Access-Control-Allow-Origin': 'dakom1-crud-api.herokuapp.com/lists' },
             data: {
-              name: this.state.name,
-              id: this.state.id
+                name: this.state.name,
+                id: this.state.id,
             }
-    };
+        };
+    }
+    else if (this.state.name==="") {
 
-    axios(user).then(
-        (res) => {
-          console.log(res.data);
-          let info= document.querySelector(".change")
-            info.innerHTML= "name: "+res.data.name;
-        },
-        (error) => {
-          console.log(error);
+            user = {
+            method: "put",
+            url: `https://cors-anywhere.herokuapp.com/dakom1-crud-api.herokuapp.com/lists/${this.state.id}`,
+            headers: { 'Access-Control-Allow-Origin': 'dakom1-crud-api.herokuapp.com/lists' },
+            data: {
+                pic: this.state.pic,
+                id: this.state.id,
+            }
+        };
+    }
+        else {
+            user = {
+            method: "put",
+            url: `https://cors-anywhere.herokuapp.com/dakom1-crud-api.herokuapp.com/lists/${this.state.id}`,
+            headers: { 'Access-Control-Allow-Origin': 'dakom1-crud-api.herokuapp.com/lists' },
+            data: {
+                name: this.state.name,
+                id: this.state.id,
+                pic: this.state.pic
+            }
+        };  
         }
-      );
-        }
+      
+
+        axios(user).then(
+            (res) => {
+                console.log(res.data);
+                let info = document.querySelector(".change")
+                info.innerHTML = "name: " + res.data.name;
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }
     render() {
         return (
             <div>
                 <p>
-                    This is the  where you can create your own Pokemon.<br></br> 
+                    This is the  where you can create update a Pokemon.<br></br> 
                     You will need the ID and any name of your choice.
 
                 </p>
@@ -55,6 +89,7 @@ class Upd extends Component {
                 <form onSubmit={this.submitHandler}>
                     <div>Name<input type="text" name= "name" onChange={this.changeHandler}/></div>
                     <div>ID<input type="text" name= "id" onChange={this.changeHandles}/></div>
+                    <div>Pic<input type="text" name= "pic" onChange={this.changeHandle}/></div>
 
                     <button type="submit">Update</button>
                 </form>
